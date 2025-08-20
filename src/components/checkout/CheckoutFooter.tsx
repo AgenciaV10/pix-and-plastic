@@ -4,15 +4,17 @@ interface CheckoutFooterProps {
   termsUrl?: string;
   privacyUrl?: string;
   reportUrl?: string;
+  customerName?: string;
 }
 
 export function CheckoutFooter({ 
   termsUrl = "#", 
   privacyUrl = "#", 
-  reportUrl = "#" 
+  reportUrl = "#",
+  customerName = "" 
 }: CheckoutFooterProps) {
   return (
-    <footer className="text-center space-y-4 pt-6 border-t border-border">
+    <footer className="text-center space-y-4 pt-6 pb-8 border-t border-border">
       {/* Links */}
       <div className="flex flex-wrap justify-center gap-4 text-xs text-muted-foreground">
         <a 
@@ -60,9 +62,9 @@ export function CheckoutFooter({
         <span>Powered by</span>
         <div className="flex items-center gap-1 font-medium text-foreground">
           <div className="w-4 h-4 bg-green-500 rounded-sm flex items-center justify-center">
-            <span className="text-white text-xs font-bold">k</span>
+            <span className="text-white text-xs font-bold">P</span>
           </div>
-          <span>kiwify</span>
+          <span>Checkout Seguro</span>
         </div>
       </div>
 

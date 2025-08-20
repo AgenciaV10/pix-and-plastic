@@ -27,7 +27,7 @@ export function CountrySelector({ selectedCountry, onCountryChange }: CountrySel
         <Button 
           variant="outline" 
           size="sm" 
-          className="h-8 px-2 gap-1 text-xs border-input bg-card"
+          className="h-8 px-2 gap-1 text-xs bg-white border border-[#cfcfcf] rounded"
         >
           <img src={selectedCountry.flag} alt={selectedCountry.name} className="w-4 h-3 object-cover" />
           <span>{selectedCountry.name}</span>

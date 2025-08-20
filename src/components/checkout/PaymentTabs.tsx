@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CreditCard, QrCode } from "lucide-react";
+import { CreditCard, QrCode, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -41,14 +41,21 @@ export function PaymentTabs({ selectedMethod, onMethodChange }: PaymentTabsProps
             variant={isSelected ? "default" : "outline"}
             onClick={() => onMethodChange(tab.id)}
             className={cn(
-              "flex-1 gap-2 h-12 text-sm",
+              "flex-1 gap-2 h-12 text-sm md:w-[200px] md:h-16 relative",
               isSelected 
-                ? "bg-primary text-primary-foreground border-primary" 
-                : "bg-card border-input hover:bg-muted"
+                ? "bg-white text-blue-500 border-2 border-blue-500 hover:bg-white hover:text-blue-500" 
+                : "bg-card border-0",
+              !isSelected && "shadow-md border border-gray-300"
             )}
+            style={!isSelected ? {
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06)'
+            } : {}}
           >
             <Icon className="w-4 h-4" />
             {tab.label}
+            {isSelected && (
+              <Check className="w-4 h-4 absolute top-2 right-2 text-green-500" />
+            )}
           </Button>
         );
       })}

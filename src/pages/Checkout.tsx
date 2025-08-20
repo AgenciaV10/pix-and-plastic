@@ -47,6 +47,7 @@ export default function Checkout() {
   const [saveData, setSaveData] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [customerName, setCustomerName] = useState("");
 
   const handlePayment = async () => {
     setIsLoading(true);
@@ -68,23 +69,24 @@ export default function Checkout() {
   return (
     <div className="min-h-screen bg-background">
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8" style={{width: '672px', height: '950px'}}>
+      <div className="container mx-auto px-4 py-8" style={{width: '710px', height: '950px'}}>
 
         {/* Checkout Form */}
         <Card className="border-border shadow-lg">
           <CardContent className="p-6 space-y-6">
             {/* Customer Information */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">Informações pessoais</h3>
+              <h3 className="text-lg font-semibold mb-4" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Informações pessoais</h3>
               <CustomerForm 
                 selectedCountry={selectedCountry} 
                 onCountryChange={setSelectedCountry}
+                onNameChange={setCustomerName}
               />
             </div>
 
             {/* Payment Method */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">Método de pagamento</h3>
+              <h3 className="text-lg font-semibold mb-4" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Método de pagamento</h3>
               <PaymentTabs 
                 selectedMethod={paymentMethod}
                 onMethodChange={setPaymentMethod}
@@ -106,7 +108,7 @@ export default function Checkout() {
             </div>
 
             {/* Save Data Checkbox */}
-            <div className="flex items-start space-x-2">
+            <div className="flex items-start space-x-2 md:w-[622px]">
               <Checkbox 
                 id="saveData" 
                 checked={saveData}
@@ -122,10 +124,12 @@ export default function Checkout() {
             </div>
 
             {/* Security Message */}
-            <SecurityMessage />
+            <div className="md:w-[622px]">
+              <SecurityMessage />
+            </div>
 
             {/* Terms Checkbox */}
-            <div className="flex items-start space-x-2">
+            <div className="flex items-start space-x-2 md:w-[622px]">
               <Checkbox 
                 id="acceptTerms" 
                 checked={acceptTerms}
@@ -137,9 +141,9 @@ export default function Checkout() {
                 htmlFor="acceptTerms" 
                 className="text-sm text-foreground cursor-pointer"
               >
-                Ao clicar em "Pagar agora", eu declaro que li estou ciente que a Kiwify está 
+                Ao clicar em "Pagar agora", eu declaro que li estou ciente que a Empresa está 
                 processando esta compra em nome de{" "}
-                <strong>Antonio Luiz monteiro</strong> e que não possuo responsabilidade pelo conteúdo, 
+                <strong>{customerName || "Cliente"}</strong> e que não possuo responsabilidade pelo conteúdo, 
                 oferta e nem faço controle prévio do infoproduto; (ii) que li e concordo com os{" "}
                 <a href="#" className="text-primary hover:underline">Termos de Compra</a>,{" "}
                 <a href="#" className="text-primary hover:underline">Termos de Uso</a> e{" "}
@@ -151,7 +155,7 @@ export default function Checkout() {
             <Button 
               onClick={handlePayment}
               disabled={!acceptTerms || isLoading}
-              className="w-full h-12 bg-checkout-success hover:bg-checkout-success/90 text-checkout-success-foreground font-semibold text-lg"
+              className="w-full md:w-[622px] h-12 bg-checkout-success hover:bg-checkout-success/90 text-checkout-success-foreground font-semibold text-lg"
             >
               {isLoading ? (
                 <div className="flex items-center gap-2">
@@ -167,7 +171,7 @@ export default function Checkout() {
 
         {/* Footer */}
         <div className="mt-8">
-          <CheckoutFooter />
+          <CheckoutFooter customerName={customerName} />
         </div>
       </div>
     </div>

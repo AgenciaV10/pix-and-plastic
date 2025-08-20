@@ -34,27 +34,28 @@ export function CardForm({ installments = true }: CardFormProps) {
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="md:w-[622px] md:border md:border-[rgba(203,213,224,var(--border-opacity))] md:bg-[#FAFAFA] md:p-4 md:rounded-lg space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="cardNumber">Número do cartão</Label>
+        <Label htmlFor="cardNumber" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Número do cartão</Label>
         <div className="relative">
           <Input
             id="cardNumber"
             placeholder="0000 0000 0000 0000"
             value={cardNumber}
             onChange={handleCardNumberChange}
-            className="pl-10"
+            className="pl-10 pr-10 w-full bg-white border border-[#cfcfcf] rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent md:h-12"
           />
           <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="expiryMonth">Mês</Label>
+      {/* Mês, Ano e Código de segurança na mesma linha no desktop */}
+      <div className="md:flex md:gap-2 space-y-2 md:space-y-0">
+        <div className="space-y-2 md:flex-1">
+          <Label htmlFor="expiryMonth" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Mês</Label>
           <Select>
-            <SelectTrigger>
+            <SelectTrigger className="bg-white border border-[#cfcfcf] rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent md:h-[46px]">
               <SelectValue placeholder="Mês" />
             </SelectTrigger>
             <SelectContent>
@@ -67,10 +68,10 @@ export function CardForm({ installments = true }: CardFormProps) {
           </Select>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="expiryYear">Ano</Label>
+        <div className="space-y-2 md:flex-1">
+          <Label htmlFor="expiryYear" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Ano</Label>
           <Select>
-            <SelectTrigger>
+            <SelectTrigger className="bg-white border border-[#cfcfcf] rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent md:h-[46px]">
               <SelectValue placeholder="Ano" />
             </SelectTrigger>
             <SelectContent>
@@ -82,28 +83,28 @@ export function CardForm({ installments = true }: CardFormProps) {
             </SelectContent>
           </Select>
         </div>
-      </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="cvv">Cód. segurança</Label>
-        <div className="relative">
-          <Input
-            id="cvv"
-            placeholder="000"
-            maxLength={4}
-            className="w-24"
-          />
-          <span className="absolute right-0 top-1/2 transform -translate-y-1/2 text-xs text-muted-foreground mr-3">
-            ?
-          </span>
+        <div className="space-y-2 md:flex-[2]">
+          <Label htmlFor="cvv" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Cód. segurança</Label>
+          <div className="relative">
+            <Input
+              id="cvv"
+              placeholder="000"
+              maxLength={4}
+              className="w-full bg-white border border-[#cfcfcf] rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent md:h-12 pr-8"
+            />
+            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-muted-foreground">
+              ?
+            </span>
+          </div>
         </div>
       </div>
 
       {installments && (
         <div className="space-y-2">
-          <Label>Parcelas</Label>
+          <Label className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Parcelas</Label>
           <Select value={selectedInstallments} onValueChange={setSelectedInstallments}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full bg-white border border-[#cfcfcf] rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent md:h-[46px]">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

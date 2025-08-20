@@ -43,9 +43,10 @@ interface Country {
 interface CustomerFormProps {
   selectedCountry: Country;
   onCountryChange?: (country: Country) => void;
+  onNameChange?: (name: string) => void;
 }
 
-export function CustomerForm({ selectedCountry, onCountryChange }: CustomerFormProps) {
+export function CustomerForm({ selectedCountry, onCountryChange, onNameChange }: CustomerFormProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -97,6 +98,10 @@ export function CustomerForm({ selectedCountry, onCountryChange }: CustomerFormP
     } else if (field === "phone") {
       formattedValue = formatPhone(value, selectedCountry.code);
     }
+    
+    if (field === "name" && onNameChange) {
+      onNameChange(formattedValue);
+    }
 
     setFormData(prev => ({ ...prev, [field]: formattedValue }));
     
@@ -119,97 +124,98 @@ export function CustomerForm({ selectedCountry, onCountryChange }: CustomerFormP
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="name">Nome completo</Label>
+        <Label htmlFor="name" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Nome completo</Label>
         <Input
           id="name"
           placeholder="Seu nome completo"
           value={formData.name}
           onChange={(e) => handleInputChange("name", e.target.value)}
-          className={errors.name ? "border-destructive" : ""}
+          className={`${errors.name ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded md:w-[622px] md:h-12`}
         />
         {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="email">E-mail</Label>
+        <Label htmlFor="email" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>E-mail</Label>
         <Input
           id="email"
           type="email"
           placeholder="seu@email.com"
           value={formData.email}
           onChange={(e) => handleInputChange("email", e.target.value)}
-          className={errors.email ? "border-destructive" : ""}
+          className={`${errors.email ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded md:w-[622px] md:h-12`}
         />
         {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="confirmEmail">Confirmar e-mail</Label>
+        <Label htmlFor="confirmEmail" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Confirmar e-mail</Label>
         <Input
           id="confirmEmail"
           type="email"
           placeholder="Confirme seu e-mail"
           value={formData.confirmEmail}
           onChange={(e) => handleInputChange("confirmEmail", e.target.value)}
-          className={errors.confirmEmail ? "border-destructive" : ""}
+          className={`${errors.confirmEmail ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded md:w-[622px] md:h-12`}
         />
         {errors.confirmEmail && <p className="text-xs text-destructive">{errors.confirmEmail}</p>}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="document">
-          {selectedCountry.code === "BR" ? "CPF/CNPJ" : "Documento"}
-        </Label>
-        <Input
-          id="document"
-          placeholder={selectedCountry.code === "BR" ? "000.000.000-00" : "Seu documento"}
-          value={formData.document}
-          onChange={(e) => handleInputChange("document", e.target.value)}
-          className={errors.document ? "border-destructive" : ""}
-        />
-        {errors.document && <p className="text-xs text-destructive">{errors.document}</p>}
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="phone">Telefone</Label>
-        <div className="flex gap-2">
-          <Select 
-            value={selectedCountry.phoneCode} 
-            onValueChange={(value) => {
-              const country = countries.find(c => c.phoneCode === value);
-              if (country && onCountryChange) {
-                onCountryChange(country);
-              }
-            }}
-          >
-            <SelectTrigger className="w-20">
-              <SelectValue>
-                <div className="flex items-center gap-2">
-                  <img src={selectedCountry.flag} alt={selectedCountry.name} className="w-4 h-3 object-cover" />
-                  <span className="text-sm">{selectedCountry.phoneCode}</span>
-                </div>
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              {countries.map((country) => (
-                <SelectItem key={country.code} value={country.phoneCode}>
-                  <div className="flex items-center gap-2">
-                    <img src={country.flag} alt={country.name} className="w-4 h-3 object-cover" />
-                    <span>{country.name} {country.phoneCode}</span>
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+      {/* CNPJ e Telefone - mesma linha no desktop */}
+      <div className="md:flex md:gap-2 space-y-2 md:space-y-0">
+        <div className="space-y-2">
+          <Label htmlFor="document" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>CNPJ</Label>
           <Input
-            id="phone"
-            placeholder={selectedCountry.code === "BR" ? "(00) 00000-0000" : "Telefone"}
-            value={formData.phone}
-            onChange={(e) => handleInputChange("phone", e.target.value)}
-            className={`flex-1 ${errors.phone ? "border-destructive" : ""}`}
+            id="document"
+            placeholder="00.000.000/0000-00"
+            value={formData.document}
+            onChange={(e) => handleInputChange("document", e.target.value)}
+            className={`${errors.document ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded md:w-[307px] md:h-12`}
           />
+          {errors.document && <p className="text-xs text-destructive">{errors.document}</p>}
         </div>
-        {errors.phone && <p className="text-xs text-destructive">{errors.phone}</p>}
+
+        <div className="space-y-2">
+          <Label htmlFor="phone" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Telefone</Label>
+          <div className="flex gap-2">
+            <Select 
+              value={selectedCountry.phoneCode} 
+              onValueChange={(value) => {
+                const country = countries.find(c => c.phoneCode === value);
+                if (country && onCountryChange) {
+                  onCountryChange(country);
+                }
+              }}
+            >
+              <SelectTrigger className="w-20 bg-white border border-[#cfcfcf] rounded md:h-12">
+                <SelectValue>
+                  <div className="flex items-center gap-2">
+                    <img src={selectedCountry.flag} alt={selectedCountry.name} className="w-4 h-3 object-cover" />
+                    <span className="text-xs md:text-sm">{selectedCountry.phoneCode}</span>
+                  </div>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {countries.map((country) => (
+                  <SelectItem key={country.code} value={country.phoneCode}>
+                    <div className="flex items-center gap-2">
+                      <img src={country.flag} alt={country.name} className="w-4 h-3 object-cover" />
+                      <span>{country.name} {country.phoneCode}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Input
+              id="phone"
+              placeholder={selectedCountry.code === "BR" ? "(00) 00000-0000" : "Telefone"}
+              value={formData.phone}
+              onChange={(e) => handleInputChange("phone", e.target.value)}
+              className={`flex-1 ${errors.phone ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded md:w-[227px] md:h-12`}
+            />
+          </div>
+          {errors.phone && <p className="text-xs text-destructive">{errors.phone}</p>}
+        </div>
       </div>
     </div>
   );
