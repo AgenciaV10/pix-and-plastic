@@ -1,0 +1,364 @@
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Trash2, Copy, X } from 'lucide-react';
+import { ColumnComponent } from './ColumnManager';
+import { ComponentStyle } from './EditableComponent';
+
+interface ComponentSettingsPanelProps {
+  component: ColumnComponent | null;
+  style: ComponentStyle;
+  onStyleChange: (style: Partial<ComponentStyle>) => void;
+  onDelete: () => void;
+  onDuplicate: () => void;
+  onClose: () => void;
+  onContentChange: (content: string) => void;
+}
+
+export function ComponentSettingsPanel({
+  component,
+  style,
+  onStyleChange,
+  onDelete,
+  onDuplicate,
+  onClose,
+  onContentChange
+}: ComponentSettingsPanelProps) {
+  if (!component) {
+    return null;
+  }
+
+  const renderTextSettings = () => (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Conteúdo</label>
+        <textarea
+          value={component.content}
+          onChange={(e) => onContentChange(e.target.value)}
+          className="w-full p-2 border rounded-md text-sm resize-none"
+          rows={3}
+          placeholder="Digite o texto..."
+        />
+      </div>
+      
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Tamanho da Fonte</label>
+        <select
+          value={style.fontSize}
+          onChange={(e) => onStyleChange({ fontSize: e.target.value as any })}
+          className="w-full p-2 border rounded-md text-sm"
+        >
+          <option value="small">Pequeno</option>
+          <option value="medium">Médio</option>
+          <option value="large">Grande</option>
+          <option value="huge">Muito Grande</option>
+        </select>
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Cor do Texto</label>
+        <div className="flex gap-2">
+          <input
+            type="color"
+            value={style.color}
+            onChange={(e) => onStyleChange({ color: e.target.value })}
+            className="w-12 h-8 border rounded cursor-pointer"
+          />
+          <input
+            type="text"
+            value={style.color}
+            onChange={(e) => onStyleChange({ color: e.target.value })}
+            className="flex-1 p-2 border rounded-md text-sm"
+            placeholder="#000000"
+          />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Alinhamento</label>
+        <div className="grid grid-cols-4 gap-1">
+          {['left', 'center', 'right', 'justify'].map((align) => (
+            <Button
+              key={align}
+              size="sm"
+              variant={style.textAlign === align ? 'default' : 'outline'}
+              onClick={() => onStyleChange({ textAlign: align as any })}
+              className="text-xs"
+            >
+              {align === 'left' && '←'}
+              {align === 'center' && '↔'}
+              {align === 'right' && '→'}
+              {align === 'justify' && '≡'}
+            </Button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderImageSettings = () => {
+    return (
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">URL da Imagem</label>
+          <input
+            type="url"
+            value={component.content}
+            onChange={(e) => onContentChange(e.target.value)}
+            className="w-full p-2 border rounded-md text-sm"
+            placeholder="https://exemplo.com/imagem.jpg"
+          />
+        </div>
+        
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Upload de Imagem</label>
+          <Button variant="outline" size="sm" className="w-full text-xs">
+            Selecionar do computador
+          </Button>
+          <p className="text-xs text-muted-foreground">PNG, JPG até 10 MB</p>
+        </div>
+      </div>
+    );
+  };
+
+  const renderAdvantagesSettings = () => {
+    const advantages = JSON.parse(component.content || '[]');
+    
+    const updateAdvantages = (newAdvantages: string[]) => {
+      onContentChange(JSON.stringify(newAdvantages));
+    };
+
+    const addAdvantage = () => {
+      updateAdvantages([...advantages, 'Nova vantagem']);
+    };
+
+    const removeAdvantage = (index: number) => {
+      updateAdvantages(advantages.filter((_: any, i: number) => i !== index));
+    };
+
+    const updateAdvantage = (index: number, value: string) => {
+      const newAdvantages = [...advantages];
+      newAdvantages[index] = value;
+      updateAdvantages(newAdvantages);
+    };
+
+    return (
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <label className="text-sm font-medium">Vantagens</label>
+            <Button size="sm" onClick={addAdvantage} className="text-xs">
+              + Adicionar
+            </Button>
+          </div>
+          
+          <div className="space-y-2">
+            {advantages.map((advantage: string, index: number) => (
+              <div key={index} className="flex gap-2">
+                <input
+                  type="text"
+                  value={advantage}
+                  onChange={(e) => updateAdvantage(index, e.target.value)}
+                  className="flex-1 p-2 border rounded-md text-sm"
+                  placeholder="Digite a vantagem..."
+                />
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => removeAdvantage(index)}
+                  className="px-2"
+                >
+                  <Trash2 className="w-3 h-3" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderTestimonialSettings = () => {
+    const testimonial = JSON.parse(component.content || '{}');
+    
+    const updateTestimonial = (updates: any) => {
+      onContentChange(JSON.stringify({ ...testimonial, ...updates }));
+    };
+
+    return (
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Nome do Cliente</label>
+          <input
+            type="text"
+            value={testimonial.name || ''}
+            onChange={(e) => updateTestimonial({ name: e.target.value })}
+            className="w-full p-2 border rounded-md text-sm"
+            placeholder="Nome do cliente"
+          />
+        </div>
+        
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Depoimento</label>
+          <textarea
+            value={testimonial.text || ''}
+            onChange={(e) => updateTestimonial({ text: e.target.value })}
+            className="w-full p-2 border rounded-md text-sm resize-none"
+            rows={3}
+            placeholder="Digite o depoimento..."
+          />
+        </div>
+        
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Avaliação (1-5 estrelas)</label>
+          <input
+            type="number"
+            min="1"
+            max="5"
+            value={testimonial.rating || 5}
+            onChange={(e) => updateTestimonial({ rating: parseInt(e.target.value) })}
+            className="w-full p-2 border rounded-md text-sm"
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const renderComponentSpecificSettings = () => {
+    switch (component.type) {
+      case 'text':
+        return renderTextSettings();
+      case 'image':
+        return renderImageSettings();
+      case 'advantages':
+        return renderAdvantagesSettings();
+      case 'testimonial':
+        return renderTestimonialSettings();
+      default:
+        return (
+          <div className="text-sm text-gray-500">
+            Configurações para {component.type} em desenvolvimento...
+          </div>
+        );
+    }
+  };
+
+  return (
+    <Card className="w-80 h-full">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-sm font-medium capitalize">
+            {component.type === 'text' && 'Texto'}
+            {component.type === 'image' && 'Imagem'}
+            {component.type === 'advantages' && 'Vantagens'}
+            {component.type === 'testimonial' && 'Depoimento'}
+            {component.type === 'countdown' && 'Cronômetro'}
+            {component.type === 'video' && 'Vídeo'}
+            {component.type === 'social' && 'Redes Sociais'}
+          </CardTitle>
+          <div className="flex gap-1">
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={onDelete}
+              className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
+              title="Excluir"
+            >
+              <Trash2 className="w-3 h-3" />
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={onDuplicate}
+              className="h-6 w-6 p-0"
+              title="Duplicar"
+            >
+              <Copy className="w-3 h-3" />
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={onClose}
+              className="h-6 w-6 p-0"
+              title="Fechar"
+            >
+              <X className="w-3 h-3" />
+            </Button>
+          </div>
+        </div>
+      </CardHeader>
+      
+      <CardContent className="space-y-6">
+        {/* Component-specific settings */}
+        {renderComponentSpecificSettings()}
+        
+        {/* Common style settings */}
+        <div className="space-y-4 pt-4 border-t">
+          <h4 className="text-sm font-medium">Estilo</h4>
+          
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Background</label>
+            <div className="flex gap-2">
+              <input
+                type="color"
+                value={style.backgroundColor}
+                onChange={(e) => onStyleChange({ backgroundColor: e.target.value })}
+                className="w-12 h-8 border rounded cursor-pointer"
+              />
+              <input
+                type="text"
+                value={style.backgroundColor}
+                onChange={(e) => onStyleChange({ backgroundColor: e.target.value })}
+                className="flex-1 p-2 border rounded-md text-sm"
+                placeholder="#ffffff"
+              />
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Cor da borda</label>
+            <div className="flex gap-2">
+              <input
+                type="color"
+                value={style.borderColor}
+                onChange={(e) => onStyleChange({ borderColor: e.target.value })}
+                className="w-12 h-8 border rounded cursor-pointer"
+              />
+              <input
+                type="text"
+                value={style.borderColor}
+                onChange={(e) => onStyleChange({ borderColor: e.target.value })}
+                className="flex-1 p-2 border rounded-md text-sm"
+                placeholder="#e5e7eb"
+              />
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Largura da borda (px)</label>
+            <input
+              type="number"
+              min="0"
+              max="10"
+              value={style.borderWidth}
+              onChange={(e) => onStyleChange({ borderWidth: parseInt(e.target.value) })}
+              className="w-full p-2 border rounded-md text-sm"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Radius (px)</label>
+            <input
+              type="number"
+              min="0"
+              max="50"
+              value={style.borderRadius}
+              onChange={(e) => onStyleChange({ borderRadius: parseInt(e.target.value) })}
+              className="w-full p-2 border rounded-md text-sm"
+            />
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

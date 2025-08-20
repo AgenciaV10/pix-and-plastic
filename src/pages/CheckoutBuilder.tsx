@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ComponentPalette } from "@/components/builder/ComponentPalette";
 import { CheckoutCanvas } from "@/components/builder/CheckoutCanvas";
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 interface CanvasComponent {
   id: string;
@@ -34,16 +36,18 @@ export default function CheckoutBuilder() {
   };
 
   return (
-    <div className="h-screen flex bg-gray-50">
-      {/* Main Canvas Area */}
-      <CheckoutCanvas
-        components={components}
-        onComponentUpdate={handleComponentUpdate}
-        onComponentDelete={handleComponentDelete}
-      />
-      
-      {/* Right Sidebar - Component Palette */}
-      <ComponentPalette onComponentAdd={handleComponentAdd} />
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <div className="h-screen flex bg-gray-50">
+        {/* Main Canvas Area */}
+        <CheckoutCanvas
+          components={components}
+          onComponentUpdate={handleComponentUpdate}
+          onComponentDelete={handleComponentDelete}
+        />
+        
+        {/* Right Sidebar - Component Palette */}
+        <ComponentPalette onComponentAdd={handleComponentAdd} />
+      </div>
+    </DndProvider>
   );
 }

@@ -1,18 +1,16 @@
 import { Type, Image, Award, Shield, Navigation, List, Clock, Star, Video, Facebook, X, MessageCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { DraggableComponent } from "./DraggableComponent";
 
 const components = [
   { id: "text", name: "Texto", icon: Type },
   { id: "image", name: "Imagem", icon: Image },
   { id: "advantages", name: "Vantagens", icon: Award },
-  { id: "seal", name: "Selo", icon: Shield },
-  { id: "header", name: "Header", icon: Navigation },
-  { id: "list", name: "Lista", icon: List },
-  { id: "timer", name: "Cronômetro", icon: Clock },
   { id: "testimonial", name: "Depoimento", icon: Star },
+  { id: "countdown", name: "Cronômetro", icon: Clock },
   { id: "video", name: "Vídeo", icon: Video },
-  { id: "facebook", name: "Facebook", icon: Facebook },
+  { id: "social", name: "Redes Sociais", icon: Facebook },
 ];
 
 const extraComponents = [
@@ -35,21 +33,15 @@ export function ComponentPalette({ onComponentAdd }: ComponentPaletteProps) {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
-              {components.map((component) => {
-                const Icon = component.icon;
-                return (
-                  <Button
-                    key={component.id}
-                    variant="outline"
-                    size="sm"
-                    onClick={() => onComponentAdd(component.id)}
-                    className="flex flex-col items-center gap-1 h-16 text-xs"
-                  >
-                    <Icon className="w-4 h-4" />
-                    {component.name}
-                  </Button>
-                );
-              })}
+              {components.map((component) => (
+                <DraggableComponent
+                  key={component.id}
+                  id={component.id}
+                  name={component.name}
+                  icon={component.icon}
+                  onAdd={() => onComponentAdd(component.id)}
+                />
+              ))}
             </div>
           </CardContent>
         </Card>
@@ -61,21 +53,15 @@ export function ComponentPalette({ onComponentAdd }: ComponentPaletteProps) {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
-              {extraComponents.map((component) => {
-                const Icon = component.icon;
-                return (
-                  <Button
-                    key={component.id}
-                    variant="outline"
-                    size="sm"
-                    onClick={() => onComponentAdd(component.id)}
-                    className="flex flex-col items-center gap-1 h-16 text-xs"
-                  >
-                    <Icon className="w-4 h-4" />
-                    {component.name}
-                  </Button>
-                );
-              })}
+              {extraComponents.map((component) => (
+                <DraggableComponent
+                  key={component.id}
+                  id={component.id}
+                  name={component.name}
+                  icon={component.icon}
+                  onAdd={() => onComponentAdd(component.id)}
+                />
+              ))}
             </div>
           </CardContent>
         </Card>
