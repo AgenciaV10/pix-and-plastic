@@ -68,7 +68,7 @@ export default function Checkout() {
   return (
     <div className="min-h-screen bg-background">
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8" style={{width: '652px', height: '950px'}}>
+      <div className="container mx-auto px-4 py-8" style={{width: '672px', height: '950px'}}>
 
         {/* Checkout Form */}
         <Card className="border-border shadow-lg">
