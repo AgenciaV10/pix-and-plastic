@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Checkout from "./pages/Checkout";
 import Admin from "./pages/Admin";
 import CheckoutBuilder from "./pages/CheckoutBuilder";
+import CheckoutPreview from "./pages/CheckoutPreview";
 import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/produtos" element={<Products />} />
           <Route path="/builder" element={<CheckoutBuilder />} />
+          <Route path="/preview" element={<CheckoutPreview />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

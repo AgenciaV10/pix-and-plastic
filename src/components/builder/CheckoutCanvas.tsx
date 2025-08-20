@@ -17,6 +17,7 @@ interface CheckoutCanvasProps {
   components: CanvasComponent[];
   onComponentUpdate: (id: string, updates: Partial<CanvasComponent>) => void;
   onComponentDelete: (id: string) => void;
+  viewMode?: 'desktop' | 'mobile';
 }
 
 type ColumnPosition = 'top' | 'left' | 'right' | 'bottom';
@@ -35,7 +36,7 @@ interface Column {
   width?: string;
 }
 
-export function CheckoutCanvas({ components, onComponentUpdate, onComponentDelete }: CheckoutCanvasProps) {
+export function CheckoutCanvas({ components, onComponentUpdate, onComponentDelete, viewMode = 'desktop' }: CheckoutCanvasProps) {
   const [columns, setColumns] = useState<Column[]>([]);
   const [selectedComponentId, setSelectedComponentId] = useState<string | null>(null);
 
@@ -151,11 +152,11 @@ export function CheckoutCanvas({ components, onComponentUpdate, onComponentDelet
 
   return (
     <div className="flex">
-      <div className="flex-1 bg-gray-50 p-6 relative overflow-auto">
-        <div className="max-w-6xl mx-auto space-y-4">
+      <div className="flex-1 bg-gray-50 p-4 lg:p-6 relative overflow-auto">
+        <div className="max-w-7xl mx-auto space-y-4">
           {/* Top Columns */}
           {topColumns.length > 0 && (
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
                {topColumns.map((column) => (
                  <ColumnManager
                    key={column.id}
@@ -175,7 +176,7 @@ export function CheckoutCanvas({ components, onComponentUpdate, onComponentDelet
           )}
 
         {/* Column Management Buttons */}
-        <div className="flex gap-2 mb-4 p-2 bg-white rounded-lg shadow-sm">
+        <div className="flex flex-wrap gap-2 mb-6 p-2 bg-white rounded-lg shadow-sm">
           <Button
             size="sm"
             variant="outline"
@@ -214,11 +215,11 @@ export function CheckoutCanvas({ components, onComponentUpdate, onComponentDelet
           </Button>
         </div>
 
-        {/* Middle Section with Left, Checkout, Right */}
-        <div className="flex gap-4">
+        {/* Main Content Area */}
+        <div className={`flex ${viewMode === 'mobile' ? 'flex-col' : 'flex-col lg:flex-row'} gap-4 lg:gap-6 items-start justify-center`}>
           {/* Left Columns */}
           {leftColumns.length > 0 && (
-            <div className="flex flex-col gap-2">
+            <div className={`flex ${viewMode === 'mobile' ? 'flex-col' : 'flex-col'} gap-2 ${viewMode === 'mobile' ? 'w-full' : 'w-full lg:w-80'}`}>
                {leftColumns.map((column) => (
                  <ColumnManager
                    key={column.id}
@@ -238,21 +239,19 @@ export function CheckoutCanvas({ components, onComponentUpdate, onComponentDelet
           )}
 
           {/* Checkout Preview - Central */}
-          <div className="flex-1">
-            <Card className="border-2 border-dashed border-blue-300 bg-blue-50/30">
-              <div className="p-6">
-                <h3 className="text-lg font-semibold mb-4 text-blue-700">Preview do Checkout</h3>
-                <CheckoutComponent
-                  onPayment={(data) => console.log('Payment data:', data)}
-                  showFooter={false}
-                />
-              </div>
-            </Card>
+          <div className={`flex-shrink-0 ${viewMode === 'mobile' ? 'w-full max-w-sm mx-auto' : 'w-full max-w-2xl'}`}>
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <CheckoutComponent
+                onPayment={(data) => console.log('Payment data:', data)}
+                showFooter={false}
+                className={viewMode === 'mobile' ? 'mobile-preview' : ''}
+              />
+            </div>
           </div>
 
           {/* Right Columns */}
           {rightColumns.length > 0 && (
-            <div className="flex flex-col gap-2">
+            <div className={`flex ${viewMode === 'mobile' ? 'flex-col' : 'flex-col'} gap-2 ${viewMode === 'mobile' ? 'w-full' : 'w-full lg:w-80'}`}>
               {rightColumns.map((column) => (
                 <ColumnManager
                   key={column.id}
@@ -274,7 +273,7 @@ export function CheckoutCanvas({ components, onComponentUpdate, onComponentDelet
 
         {/* Bottom Columns */}
         {bottomColumns.length > 0 && (
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2 mt-6">
              {bottomColumns.map((column) => (
                <ColumnManager
                  key={column.id}

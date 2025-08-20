@@ -41,6 +41,12 @@ interface CheckoutComponentProps {
   className?: string;
   /** Se deve mostrar o footer */
   showFooter?: boolean;
+  /** Componentes customizados para renderizar */
+  components?: any[];
+  /** Modo de visualização */
+  viewMode?: 'desktop' | 'mobile';
+  /** Se está em modo de pré-visualização */
+  isPreview?: boolean;
 }
 
 const defaultCountries: Country[] = [
@@ -80,6 +86,9 @@ export function CheckoutComponent({
   showLoading = true,
   className = "",
   showFooter = true,
+  components = [],
+  viewMode = 'desktop',
+  isPreview = false,
 }: CheckoutComponentProps) {
   const [selectedCountry, setSelectedCountry] = useState<Country>(defaultCountry || countries[0]);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(defaultPaymentMethod);

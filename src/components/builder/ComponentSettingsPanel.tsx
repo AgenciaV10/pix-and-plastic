@@ -244,49 +244,58 @@ export function ComponentSettingsPanel({
   };
 
   return (
-    <Card className="w-80 h-full">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-sm font-medium capitalize">
-            {component.type === 'text' && 'Texto'}
-            {component.type === 'image' && 'Imagem'}
-            {component.type === 'advantages' && 'Vantagens'}
-            {component.type === 'testimonial' && 'Depoimento'}
-            {component.type === 'countdown' && 'Cronômetro'}
-            {component.type === 'video' && 'Vídeo'}
-            {component.type === 'social' && 'Redes Sociais'}
-          </CardTitle>
-          <div className="flex gap-1">
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={onDelete}
-              className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
-              title="Excluir"
-            >
-              <Trash2 className="w-3 h-3" />
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={onDuplicate}
-              className="h-6 w-6 p-0"
-              title="Duplicar"
-            >
-              <Copy className="w-3 h-3" />
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={onClose}
-              className="h-6 w-6 p-0"
-              title="Fechar"
-            >
-              <X className="w-3 h-3" />
-            </Button>
-          </div>
-        </div>
-      </CardHeader>
+    <>
+      {/* Modal Backdrop */}
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-50 z-50"
+        onClick={onClose}
+      />
+      
+      {/* Modal Content */}
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-96 max-h-[90vh] overflow-y-auto">
+        <Card className="w-full">
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-medium capitalize">
+                {component.type === 'text' && 'Texto'}
+                {component.type === 'image' && 'Imagem'}
+                {component.type === 'advantages' && 'Vantagens'}
+                {component.type === 'testimonial' && 'Depoimento'}
+                {component.type === 'countdown' && 'Cronômetro'}
+                {component.type === 'video' && 'Vídeo'}
+                {component.type === 'social' && 'Redes Sociais'}
+              </CardTitle>
+              <div className="flex gap-1">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={onDelete}
+                  className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
+                  title="Excluir"
+                >
+                  <Trash2 className="w-3 h-3" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={onDuplicate}
+                  className="h-6 w-6 p-0"
+                  title="Duplicar"
+                >
+                  <Copy className="w-3 h-3" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={onClose}
+                  className="h-6 w-6 p-0"
+                  title="Fechar"
+                >
+                  <X className="w-3 h-3" />
+                </Button>
+              </div>
+            </div>
+          </CardHeader>
       
       <CardContent className="space-y-6">
         {/* Component-specific settings */}
@@ -360,5 +369,7 @@ export function ComponentSettingsPanel({
         </div>
       </CardContent>
     </Card>
+    </div>
+    </>
   );
 }
