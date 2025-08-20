@@ -61,7 +61,7 @@ function DroppableColumn({
         // New component from palette
         const newComponent: ColumnComponent = {
           id: `${item.type}-${Date.now()}`,
-          type: item.type,
+          type: item.type as 'text' | 'image' | 'advantages' | 'testimonial' | 'countdown' | 'video' | 'social',
           content: getDefaultContent(item.type)
         };
         onComponentAdd(newComponent);

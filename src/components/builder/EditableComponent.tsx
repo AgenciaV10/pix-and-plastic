@@ -51,18 +51,39 @@ export function EditableComponent({
   const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState(component.content);
   const [style, setStyle] = useState<ComponentStyle>({
-    backgroundColor: '#ffffff',
-    borderColor: '#e5e7eb',
-    borderWidth: 2,
-    borderRadius: 8,
-    textAlign: 'left',
-    fontSize: 'medium',
-    fontWeight: 'normal',
-    fontStyle: 'normal',
-    textDecoration: 'none',
-    color: '#000000'
+    backgroundColor: component.props?.backgroundColor || '#ffffff',
+    borderColor: component.props?.borderColor || '#e5e7eb',
+    borderWidth: component.props?.borderWidth || 2,
+    borderRadius: component.props?.borderRadius || 8,
+    textAlign: component.props?.textAlign || 'left',
+    fontSize: component.props?.fontSize || 'medium',
+    fontWeight: component.props?.fontWeight || 'normal',
+    fontStyle: component.props?.fontStyle || 'normal',
+    textDecoration: component.props?.textDecoration || 'none',
+    color: component.props?.color || '#000000'
   });
   const contentRef = useRef<HTMLDivElement>(null);
+
+  // Sincronizar conteúdo quando o componente for atualizado externamente
+  useEffect(() => {
+    setContent(component.content);
+  }, [component.content]);
+
+  // Sincronizar estilo quando as props do componente forem atualizadas externamente
+  useEffect(() => {
+    setStyle({
+      backgroundColor: component.props?.backgroundColor || '#ffffff',
+      borderColor: component.props?.borderColor || '#e5e7eb',
+      borderWidth: component.props?.borderWidth || 2,
+      borderRadius: component.props?.borderRadius || 8,
+      textAlign: component.props?.textAlign || 'left',
+      fontSize: component.props?.fontSize || 'medium',
+      fontWeight: component.props?.fontWeight || 'normal',
+      fontStyle: component.props?.fontStyle || 'normal',
+      textDecoration: component.props?.textDecoration || 'none',
+      color: component.props?.color || '#000000'
+    });
+  }, [component.props]);
 
   useEffect(() => {
     if (isEditing && contentRef.current) {
