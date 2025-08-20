@@ -18,6 +18,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'sans': ['Open Sans', 'system-ui', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -61,6 +64,27 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Checkout specific colors
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
+				'checkout-danger': {
+					DEFAULT: 'hsl(var(--checkout-danger))',
+					foreground: 'hsl(var(--checkout-danger-foreground))'
+				},
+				'checkout-success': {
+					DEFAULT: 'hsl(var(--checkout-success))',
+					foreground: 'hsl(var(--checkout-success-foreground))'
+				},
+				'checkout-warning': {
+					DEFAULT: 'hsl(var(--checkout-warning))',
+					foreground: 'hsl(var(--checkout-warning-foreground))'
 				}
 			},
 			borderRadius: {
