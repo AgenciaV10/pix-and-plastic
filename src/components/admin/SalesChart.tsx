@@ -11,24 +11,26 @@ const data = [
 
 export function SalesChart() {
   return (
-    <Card className="col-span-2">
-      <CardHeader>
-        <CardTitle className="text-lg">Vendas - R$ 0</CardTitle>
+    <Card className="col-span-full lg:col-span-2">
+      <CardHeader className="pb-3 sm:pb-4">
+        <CardTitle className="text-base sm:text-lg">Vendas - R$ 0</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="h-[200px]">
+      <CardContent className="px-3 sm:px-6">
+        <div className="h-[180px] sm:h-[200px] lg:h-[220px]">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data}>
+            <LineChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
               <XAxis 
                 dataKey="time" 
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fill: '#6B7280' }}
+                tick={{ fontSize: 10, fill: '#6B7280' }}
+                className="text-xs sm:text-sm"
               />
               <YAxis 
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fill: '#6B7280' }}
+                tick={{ fontSize: 10, fill: '#6B7280' }}
+                className="text-xs sm:text-sm"
               />
               <Line 
                 type="monotone" 
@@ -36,6 +38,7 @@ export function SalesChart() {
                 stroke="#3B82F6" 
                 strokeWidth={2}
                 dot={false}
+                activeDot={{ r: 4, stroke: '#3B82F6', strokeWidth: 2, fill: '#fff' }}
               />
             </LineChart>
           </ResponsiveContainer>

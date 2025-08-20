@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Trash2, Edit } from "lucide-react";
+import { CheckoutComponent } from "@/components/checkout/CheckoutComponent";
 
 interface CanvasComponent {
   id: string;
@@ -73,15 +74,27 @@ export function CheckoutCanvas({ components, onComponentUpdate, onComponentDelet
 
       {/* Canvas Area */}
       <div className="bg-white rounded-lg shadow-sm min-h-[600px] relative">
-        {/* Drop Zone */}
-        {components.length === 0 ? (
-          <div className="absolute inset-4 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
-            <div className="text-center">
-              <p className="text-gray-500 mb-2">Arraste componentes aqui</p>
-              <p className="text-sm text-gray-400">Comece criando seu checkout personalizado</p>
+        {/* Checkout Preview */}
+        <div className="p-4">
+          <div className="border-2 border-dashed border-blue-300 rounded-lg p-4 bg-blue-50/30">
+            <div className="text-center mb-4">
+              <p className="text-blue-600 font-medium mb-1">Preview do Checkout</p>
+              <p className="text-sm text-blue-500">Personalize os componentes ao lado</p>
+            </div>
+            <div className="bg-white rounded-lg shadow-sm">
+              <CheckoutComponent 
+                onPayment={async (data) => {
+                  console.log("Preview - Dados do checkout:", data);
+                }}
+                showFooter={false}
+                className="min-h-0"
+              />
             </div>
           </div>
-        ) : (
+        </div>
+        
+        {/* Additional Components Area */}
+        {components.length > 0 && (
           <div className="p-4 space-y-4">
             {components.map((component) => (
               <div

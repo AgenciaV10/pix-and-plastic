@@ -6,18 +6,18 @@ import { MetricsGrid } from "@/components/admin/MetricsGrid";
 
 export default function Admin() {
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       
-      <main className="flex-1 ml-64 overflow-auto">
-        <div className="p-8">
+      <main className="flex-1 lg:ml-64 overflow-auto">
+        <div className="p-4 sm:p-6 lg:p-8">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Dashboard</h1>
             
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
               <Select defaultValue="19ago">
-                <SelectTrigger className="w-32">
+                <SelectTrigger className="w-full sm:w-32">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -28,7 +28,7 @@ export default function Admin() {
               </Select>
               
               <Select defaultValue="todos">
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-full sm:w-48">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -38,7 +38,7 @@ export default function Admin() {
               </Select>
               
               <Select defaultValue="todas">
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-full sm:w-48">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -51,16 +51,16 @@ export default function Admin() {
           </div>
 
           {/* Stats Grid */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <DashboardStats />
           </div>
 
           {/* Charts Section */}
-          <div className="grid gap-6 lg:grid-cols-3 mb-8">
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-3 mb-6 sm:mb-8">
             <SalesChart />
             
             {/* Additional Stats */}
-            <div className="space-y-4">
+            <div className="space-y-4 sm:space-y-6 lg:col-span-1">
               <MetricsGrid />
             </div>
           </div>
