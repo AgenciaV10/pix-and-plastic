@@ -41,7 +41,7 @@ export function PaymentTabs({ selectedMethod, onMethodChange }: PaymentTabsProps
             variant={isSelected ? "default" : "outline"}
             onClick={() => onMethodChange(tab.id)}
             className={cn(
-              "flex-1 gap-2 h-12 text-sm md:w-[200px] md:h-16 relative",
+              "flex-1 gap-2 h-12 text-sm md:h-16 md:min-w-[12rem] lg:min-w-[14rem] relative",
               isSelected 
                 ? "bg-white text-blue-500 border-2 border-blue-500 hover:bg-white hover:text-blue-500" 
                 : "bg-card border-0",

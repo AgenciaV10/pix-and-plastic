@@ -130,7 +130,7 @@ export function CustomerForm({ selectedCountry, onCountryChange, onNameChange }:
           placeholder="Seu nome completo"
           value={formData.name}
           onChange={(e) => handleInputChange("name", e.target.value)}
-          className={`${errors.name ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded md:w-[622px] md:h-12`}
+          className={`${errors.name ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded w-full h-12`}
         />
         {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
       </div>
@@ -143,7 +143,7 @@ export function CustomerForm({ selectedCountry, onCountryChange, onNameChange }:
           placeholder="seu@email.com"
           value={formData.email}
           onChange={(e) => handleInputChange("email", e.target.value)}
-          className={`${errors.email ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded md:w-[622px] md:h-12`}
+          className={`${errors.email ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded w-full h-12`}
         />
         {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
       </div>
@@ -156,28 +156,28 @@ export function CustomerForm({ selectedCountry, onCountryChange, onNameChange }:
           placeholder="Confirme seu e-mail"
           value={formData.confirmEmail}
           onChange={(e) => handleInputChange("confirmEmail", e.target.value)}
-          className={`${errors.confirmEmail ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded md:w-[622px] md:h-12`}
+          className={`${errors.confirmEmail ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded w-full h-12`}
         />
         {errors.confirmEmail && <p className="text-xs text-destructive">{errors.confirmEmail}</p>}
       </div>
 
       {/* CNPJ e Telefone - mesma linha no desktop */}
-      <div className="md:flex md:gap-2 space-y-2 md:space-y-0">
-        <div className="space-y-2">
-          <Label htmlFor="document" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>CNPJ</Label>
+      <div className="md:flex md:gap-2 space-y-2 md:space-y-0 w-full">
+        <div className="space-y-2 w-full md:flex-1">
+          <Label htmlFor="document" className="inline-block w-32 text-base font-medium" style={{color: '#333'}}>CNPJ</Label>
           <Input
             id="document"
             placeholder="00.000.000/0000-00"
             value={formData.document}
             onChange={(e) => handleInputChange("document", e.target.value)}
-            className={`${errors.document ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded md:w-[307px] md:h-12`}
+            className={`${errors.document ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded w-full h-12`}
           />
           {errors.document && <p className="text-xs text-destructive">{errors.document}</p>}
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="phone" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Telefone</Label>
-          <div className="flex gap-2">
+        <div className="space-y-2 w-full md:flex-1">
+          <Label htmlFor="phone" className="inline-block w-32 text-base font-medium" style={{color: '#333'}}>Telefone</Label>
+          <div className="flex gap-2 w-full">
             <Select 
               value={selectedCountry.phoneCode} 
               onValueChange={(value) => {
@@ -187,7 +187,7 @@ export function CustomerForm({ selectedCountry, onCountryChange, onNameChange }:
                 }
               }}
             >
-              <SelectTrigger className="w-20 bg-white border border-[#cfcfcf] rounded md:h-12">
+              <SelectTrigger className="w-20 bg-white border border-[#cfcfcf] rounded h-12">
                 <SelectValue>
                   <div className="flex items-center gap-2">
                     <img src={selectedCountry.flag} alt={selectedCountry.name} className="w-4 h-3 object-cover" />
@@ -211,7 +211,7 @@ export function CustomerForm({ selectedCountry, onCountryChange, onNameChange }:
               placeholder={selectedCountry.code === "BR" ? "(00) 00000-0000" : "Telefone"}
               value={formData.phone}
               onChange={(e) => handleInputChange("phone", e.target.value)}
-              className={`flex-1 ${errors.phone ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded md:w-[227px] md:h-12`}
+              className={`flex-1 ${errors.phone ? "border-destructive" : ""} bg-white border-[#cfcfcf] rounded h-12`}
             />
           </div>
           {errors.phone && <p className="text-xs text-destructive">{errors.phone}</p>}

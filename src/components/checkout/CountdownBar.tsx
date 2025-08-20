@@ -23,7 +23,7 @@ export function CountdownBar({ duration = 15, text = "Oferta por tempo limitado"
   const seconds = timeLeft % 60;
 
   return (
-    <div className="bg-checkout-warning text-checkout-warning-foreground py-3 px-4">
+    <div className="bg-checkout-warning text-checkout-warning-foreground py-3 px-[0.4rem] md:px-4">
       <div className="container mx-auto max-w-md flex items-center justify-center gap-2 text-sm font-medium">
         <Clock className="w-4 h-4" />
         <span>{text}</span>

@@ -69,14 +69,14 @@ export default function Checkout() {
   return (
     <div className="min-h-screen bg-background">
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8" style={{width: '710px', height: '950px'}}>
+      <div className="container mx-auto px-[0.4rem] md:px-4 py-[0.4rem] md:py-8 max-w-4xl">
 
         {/* Checkout Form */}
         <Card className="border-border shadow-lg">
           <CardContent className="p-6 space-y-6">
             {/* Customer Information */}
             <div>
-              <h3 className="text-lg font-semibold mb-4" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Informações pessoais</h3>
+              <h3 className="text-base md:text-lg font-medium mb-4 text-gray-800">Informações pessoais</h3>
               <CustomerForm 
                 selectedCountry={selectedCountry} 
                 onCountryChange={setSelectedCountry}
@@ -86,7 +86,7 @@ export default function Checkout() {
 
             {/* Payment Method */}
             <div>
-              <h3 className="text-lg font-semibold mb-4" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Método de pagamento</h3>
+              <h3 className="text-base md:text-lg font-medium mb-4 text-gray-800">Método de pagamento</h3>
               <PaymentTabs 
                 selectedMethod={paymentMethod}
                 onMethodChange={setPaymentMethod}
@@ -108,7 +108,7 @@ export default function Checkout() {
             </div>
 
             {/* Save Data Checkbox */}
-            <div className="flex items-start space-x-2 md:w-[622px]">
+            <div className="flex items-start space-x-2 w-full">
               <Checkbox 
                 id="saveData" 
                 checked={saveData}
@@ -124,12 +124,12 @@ export default function Checkout() {
             </div>
 
             {/* Security Message */}
-            <div className="md:w-[622px]">
+            <div className="w-full">
               <SecurityMessage />
             </div>
 
             {/* Terms Checkbox */}
-            <div className="flex items-start space-x-2 md:w-[622px]">
+            <div className="flex items-start space-x-2 w-full">
               <Checkbox 
                 id="acceptTerms" 
                 checked={acceptTerms}
@@ -155,7 +155,7 @@ export default function Checkout() {
             <Button 
               onClick={handlePayment}
               disabled={!acceptTerms || isLoading}
-              className="w-full md:w-[622px] h-12 bg-checkout-success hover:bg-checkout-success/90 text-checkout-success-foreground font-semibold text-lg"
+              className="w-full h-12 bg-checkout-success hover:bg-checkout-success/90 text-checkout-success-foreground font-semibold text-lg"
             >
               {isLoading ? (
                 <div className="flex items-center gap-2">

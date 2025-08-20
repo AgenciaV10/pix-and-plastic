@@ -34,7 +34,7 @@ export function CardForm({ installments = true }: CardFormProps) {
   ];
 
   return (
-    <div className="md:w-[622px] md:border md:border-[rgba(203,213,224,var(--border-opacity))] md:bg-[#FAFAFA] md:p-4 md:rounded-lg space-y-4">
+    <div className="w-full md:border md:border-[rgba(203,213,224,var(--border-opacity))] md:bg-[#FAFAFA] md:p-4 md:rounded-lg space-y-4">
       <div className="space-y-2">
         <Label htmlFor="cardNumber" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Número do cartão</Label>
         <div className="relative">
@@ -55,7 +55,7 @@ export function CardForm({ installments = true }: CardFormProps) {
         <div className="space-y-2 md:flex-1">
           <Label htmlFor="expiryMonth" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Mês</Label>
           <Select>
-            <SelectTrigger className="bg-white border border-[#cfcfcf] rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent md:h-[46px]">
+            <SelectTrigger className="bg-white border border-[#cfcfcf] rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent h-12">
               <SelectValue placeholder="Mês" />
             </SelectTrigger>
             <SelectContent>
@@ -71,7 +71,7 @@ export function CardForm({ installments = true }: CardFormProps) {
         <div className="space-y-2 md:flex-1">
           <Label htmlFor="expiryYear" className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Ano</Label>
           <Select>
-            <SelectTrigger className="bg-white border border-[#cfcfcf] rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent md:h-[46px]">
+            <SelectTrigger className="bg-white border border-[#cfcfcf] rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent h-12">
               <SelectValue placeholder="Ano" />
             </SelectTrigger>
             <SelectContent>
@@ -104,7 +104,7 @@ export function CardForm({ installments = true }: CardFormProps) {
         <div className="space-y-2">
           <Label className="inline-block w-32" style={{color: '#333', fontSize: '16px', fontWeight: '500'}}>Parcelas</Label>
           <Select value={selectedInstallments} onValueChange={setSelectedInstallments}>
-            <SelectTrigger className="w-full bg-white border border-[#cfcfcf] rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent md:h-[46px]">
+            <SelectTrigger className="w-full bg-white border border-[#cfcfcf] rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent h-12">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
