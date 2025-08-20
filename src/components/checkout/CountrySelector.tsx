@@ -9,10 +9,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const countries = [
-  { code: "BR", name: "Brasil", flag: "🇧🇷", phoneCode: "+55", currency: "R$" },
-  { code: "US", name: "Estados Unidos", flag: "🇺🇸", phoneCode: "+1", currency: "$" },
-  { code: "AR", name: "Argentina", flag: "🇦🇷", phoneCode: "+54", currency: "$" },
-  { code: "MX", name: "México", flag: "🇲🇽", phoneCode: "+52", currency: "$" },
+  { code: "BR", name: "Brasil", flag: "/flags/br.svg", phoneCode: "+55", currency: "R$" },
+  { code: "US", name: "Estados Unidos", flag: "/flags/us.svg", phoneCode: "+1", currency: "$" },
+  { code: "AR", name: "Argentina", flag: "/flags/ar.svg", phoneCode: "+54", currency: "$" },
+  { code: "MX", name: "México", flag: "/flags/mx.svg", phoneCode: "+52", currency: "$" },
 ];
 
 interface CountrySelectorProps {
@@ -29,7 +29,7 @@ export function CountrySelector({ selectedCountry, onCountryChange }: CountrySel
           size="sm" 
           className="h-8 px-2 gap-1 text-xs border-input bg-card"
         >
-          <span className="text-base">{selectedCountry.flag}</span>
+          <img src={selectedCountry.flag} alt={selectedCountry.name} className="w-4 h-3 object-cover" />
           <span>{selectedCountry.name}</span>
           <ChevronDown className="w-3 h-3" />
         </Button>
@@ -41,7 +41,7 @@ export function CountrySelector({ selectedCountry, onCountryChange }: CountrySel
             onClick={() => onCountryChange(country)}
             className="gap-2 cursor-pointer"
           >
-            <span className="text-base">{country.flag}</span>
+            <img src={country.flag} alt={country.name} className="w-4 h-3 object-cover" />
             <span>{country.name}</span>
             <span className="text-muted-foreground">({country.phoneCode})</span>
           </DropdownMenuItem>

@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CountdownBar } from "@/components/checkout/CountdownBar";
-import { CountrySelector } from "@/components/checkout/CountrySelector";
+
 import { PaymentTabs } from "@/components/checkout/PaymentTabs";
 import { CustomerForm } from "@/components/checkout/CustomerForm";
 import { CardForm } from "@/components/checkout/CardForm";
@@ -14,8 +13,32 @@ import { CheckoutFooter } from "@/components/checkout/CheckoutFooter";
 type PaymentMethod = "card" | "pix" | "card_pix";
 
 const countries = [
-  { code: "BR", name: "Brasil", flag: "🇧🇷", phoneCode: "+55", currency: "R$" },
-  { code: "US", name: "Estados Unidos", flag: "🇺🇸", phoneCode: "+1", currency: "$" },
+  { code: "BR", name: "Brazil (Brasil)", flag: "/flags/br.svg", phoneCode: "+55", currency: "R$" },
+  { code: "US", name: "United States", flag: "/flags/us.svg", phoneCode: "+1", currency: "$" },
+  { code: "MX", name: "Mexico (México)", flag: "/flags/mx.svg", phoneCode: "+52", currency: "$" },
+  { code: "CO", name: "Colombia", flag: "/flags/co.svg", phoneCode: "+57", currency: "$" },
+  { code: "AR", name: "Argentina", flag: "/flags/ar.svg", phoneCode: "+54", currency: "$" },
+  { code: "PE", name: "Peru", flag: "/flags/pe.svg", phoneCode: "+51", currency: "S/" },
+  { code: "CL", name: "Chile", flag: "/flags/cl.svg", phoneCode: "+56", currency: "$" },
+  { code: "EC", name: "Ecuador", flag: "/flags/ec.svg", phoneCode: "+593", currency: "$" },
+  { code: "UY", name: "Uruguay", flag: "/flags/uy.svg", phoneCode: "+598", currency: "$" },
+  { code: "PY", name: "Paraguay", flag: "/flags/py.svg", phoneCode: "+595", currency: "₲" },
+  { code: "BO", name: "Bolivia", flag: "/flags/bo.svg", phoneCode: "+591", currency: "Bs" },
+  { code: "VE", name: "Venezuela", flag: "/flags/ve.svg", phoneCode: "+58", currency: "Bs" },
+  { code: "GT", name: "Guatemala", flag: "/flags/gt.svg", phoneCode: "+502", currency: "Q" },
+  { code: "CR", name: "Costa Rica", flag: "/flags/cr.svg", phoneCode: "+506", currency: "₡" },
+  { code: "PA", name: "Panama", flag: "/flags/pa.svg", phoneCode: "+507", currency: "B/." },
+  { code: "ES", name: "Spain (España)", flag: "/flags/es.svg", phoneCode: "+34", currency: "€" },
+  { code: "PT", name: "Portugal", flag: "/flags/pt.svg", phoneCode: "+351", currency: "€" },
+  { code: "FR", name: "France", flag: "/flags/fr.svg", phoneCode: "+33", currency: "€" },
+  { code: "IT", name: "Italy", flag: "/flags/it.svg", phoneCode: "+39", currency: "€" },
+  { code: "DE", name: "Germany", flag: "/flags/de.svg", phoneCode: "+49", currency: "€" },
+  { code: "GB", name: "United Kingdom", flag: "/flags/gb.svg", phoneCode: "+44", currency: "£" },
+  { code: "CA", name: "Canada", flag: "/flags/ca.svg", phoneCode: "+1", currency: "$" },
+  { code: "AU", name: "Australia", flag: "/flags/au.svg", phoneCode: "+61", currency: "$" },
+  { code: "JP", name: "Japan", flag: "/flags/jp.svg", phoneCode: "+81", currency: "¥" },
+  { code: "CN", name: "China", flag: "/flags/cn.svg", phoneCode: "+86", currency: "¥" },
+  { code: "IN", name: "India", flag: "/flags/in.svg", phoneCode: "+91", currency: "₹" },
 ];
 
 export default function Checkout() {
@@ -44,18 +67,8 @@ export default function Checkout() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Countdown Bar */}
-      <CountdownBar duration={8} text="Oferta por tempo limitado" />
-
       {/* Main Content */}
-      <div className="container mx-auto max-w-md px-4 py-8">
-        {/* Country Selector */}
-        <div className="flex justify-end mb-6">
-          <CountrySelector 
-            selectedCountry={selectedCountry}
-            onCountryChange={setSelectedCountry}
-          />
-        </div>
+      <div className="container mx-auto px-4 py-8" style={{width: '652px', height: '950px'}}>
 
         {/* Checkout Form */}
         <Card className="border-border shadow-lg">
@@ -63,7 +76,10 @@ export default function Checkout() {
             {/* Customer Information */}
             <div>
               <h3 className="text-lg font-semibold mb-4">Informações pessoais</h3>
-              <CustomerForm selectedCountry={selectedCountry} />
+              <CustomerForm 
+                selectedCountry={selectedCountry} 
+                onCountryChange={setSelectedCountry}
+              />
             </div>
 
             {/* Payment Method */}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 42">
+  <rect width="60" height="42" fill="#009739"/>
+  <polygon points="30,7 52,21 30,35 8,21" fill="#FEDD00"/>
+  <circle cx="30" cy="21" r="8.5" fill="#012169"/>
+  <path d="M30,12.5 Q35,16 30,19.5 Q25,16 30,12.5" fill="#FEDD00"/>
+  <text x="30" y="25" text-anchor="middle" font-size="3" fill="#FEDD00">ORDEM E PROGRESSO</text>
+</svg>

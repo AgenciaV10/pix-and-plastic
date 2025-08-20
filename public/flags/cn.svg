@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 42">
+  <rect width="60" height="42" fill="#DE2910"/>
+  <g transform="translate(12,10)" fill="#FFDE00">
+    <path d="M0,-4 L1.2,-1.2 L4,0 L1.2,1.2 L0,4 L-1.2,1.2 L-4,0 L-1.2,-1.2 Z"/>
+  </g>
+  <g transform="translate(20,6)" fill="#FFDE00">
+    <path d="M0,-1.5 L0.5,-0.5 L1.5,0 L0.5,0.5 L0,1.5 L-0.5,0.5 L-1.5,0 L-0.5,-0.5 Z"/>
+  </g>
+  <g transform="translate(22,10)" fill="#FFDE00">
+    <path d="M0,-1.5 L0.5,-0.5 L1.5,0 L0.5,0.5 L0,1.5 L-0.5,0.5 L-1.5,0 L-0.5,-0.5 Z"/>
+  </g>
+  <g transform="translate(22,14)" fill="#FFDE00">
+    <path d="M0,-1.5 L0.5,-0.5 L1.5,0 L0.5,0.5 L0,1.5 L-0.5,0.5 L-1.5,0 L-0.5,-0.5 Z"/>
+  </g>
+  <g transform="translate(20,18)" fill="#FFDE00">
+    <path d="M0,-1.5 L0.5,-0.5 L1.5,0 L0.5,0.5 L0,1.5 L-0.5,0.5 L-1.5,0 L-0.5,-0.5 Z"/>
+  </g>
+</svg>

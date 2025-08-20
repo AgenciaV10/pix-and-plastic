@@ -103,40 +103,7 @@ const Index = () => {
           </Card>
         </div>
 
-        {/* Features List */}
-        <div className="mt-16 max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-center mb-8">Recursos Implementados</h2>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4 text-gray-800">Checkout (Cliente)</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Layout responsivo idêntico às referências</li>
-                <li>• Barra de countdown personalizada</li>
-                <li>• Formulário com validações em tempo real</li>
-                <li>• Suporte a Cartão, PIX e Cartão + PIX</li>
-                <li>• Seletor de país com máscaras dinâmicas</li>
-                <li>• Parcelamento com cálculo automático</li>
-                <li>• Mensagens de segurança e confiança</li>
-                <li>• Footer com links legais</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-4 text-gray-800">Painel Admin</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Dashboard com métricas de vendas</li>
-                <li>• Gráficos de performance</li>
-                <li>• Gestão de produtos e checkouts</li>
-                <li>• Builder visual drag & drop</li>
-                <li>• Componentes personalizáveis</li>
-                <li>• Configurações de pagamento</li>
-                <li>• Sistema de relatórios</li>
-                <li>• Interface moderna e intuitiva</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   );
