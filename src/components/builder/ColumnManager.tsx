@@ -5,6 +5,7 @@ import { Plus, Trash2, GripVertical, Clock, Video, Star } from 'lucide-react';
 import { useDrop } from 'react-dnd';
 import { DraggableComponent } from './DraggableComponent';
 import { EditableComponent } from './EditableComponent';
+import { CountdownTimer } from '@/components/countdown/CountdownTimer';
 
 interface ColumnComponent {
   id: string;
@@ -83,7 +84,15 @@ function DroppableColumn({
       case 'testimonial':
         return JSON.stringify({ name: 'Cliente', text: 'Excelente produto!', rating: 5 });
       case 'countdown':
-        return JSON.stringify({ hours: 0, minutes: 0, seconds: 0 });
+        return JSON.stringify({
+          type: 'minutes',
+          backgroundColor: '#ef4444',
+          textColor: '#ffffff',
+          duration: '00:15:00',
+          activeText: 'Oferta por tempo limitado',
+          finishedText: 'O tempo acabou!',
+          stickyTop: false
+        });
       case 'video':
         return 'https://www.youtube.com/embed/dQw4w9WgXcQ';
       case 'social':
@@ -145,27 +154,57 @@ function DroppableColumn({
       case 'testimonial':
         const testimonial = JSON.parse(component.content || '{}');
         return (
-          <div className="p-3 bg-white border rounded-lg shadow-sm">
-            <div className="flex items-center gap-1 mb-1">
-              {[...Array(testimonial.rating || 5)].map((_, i) => (
-                <span key={i} className="text-yellow-400 text-xs">★</span>
-              ))}
+          <div 
+            className="p-3 border rounded-lg shadow-sm"
+            style={{
+              backgroundColor: testimonial.backgroundColor || '#ffffff',
+              color: testimonial.textColor || '#000000'
+            }}
+          >
+            <div className={`${testimonial.horizontalMode ? 'flex items-start gap-3' : 'text-center'}`}>
+              {testimonial.image && (
+                <div className={`${testimonial.horizontalMode ? 'flex-shrink-0' : 'mb-2'}`}>
+                  <img 
+                    src={testimonial.image} 
+                    alt={testimonial.name || 'Cliente'}
+                    className={`rounded-full object-cover ${
+                      testimonial.horizontalMode ? 'w-12 h-12' : 'w-16 h-16 mx-auto'
+                    }`}
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://via.placeholder.com/64x64?text=👤';
+                    }}
+                  />
+                </div>
+              )}
+              <div className={testimonial.horizontalMode ? 'flex-1' : ''}>
+                <div className={`flex items-center gap-1 mb-1 ${
+                  testimonial.horizontalMode ? '' : 'justify-center'
+                }`}>
+                  {[...Array(testimonial.rating || 5)].map((_, i) => (
+                    <span key={i} className="text-yellow-400 text-xs">★</span>
+                  ))}
+                </div>
+                <p className="text-xs mb-1">"{testimonial.text || 'Depoimento do cliente'}"</p>
+                <p className="text-xs font-semibold opacity-75">- {testimonial.name || 'Nome do Cliente'}</p>
+              </div>
             </div>
-            <p className="text-xs mb-1">"{testimonial.text}"</p>
-            <p className="text-xs font-semibold text-gray-600">- {testimonial.name}</p>
           </div>
         );
       case 'countdown':
+        const countdownData = JSON.parse(component.content || '{}');
+        
         return (
-          <div className="p-3 bg-white border rounded-lg shadow-sm">
-            <h4 className="font-semibold text-sm mb-2">Contador</h4>
-            <div className="flex gap-2 text-sm justify-center">
-              <span className="bg-red-500 text-white px-2 py-1 rounded">00</span>
-              <span>:</span>
-              <span className="bg-red-500 text-white px-2 py-1 rounded">00</span>
-              <span>:</span>
-              <span className="bg-red-500 text-white px-2 py-1 rounded">00</span>
-            </div>
+          <div className="border rounded-lg shadow-sm overflow-hidden">
+            <CountdownTimer
+              type={countdownData.type || 'minutes'}
+              backgroundColor={countdownData.backgroundColor || '#ef4444'}
+              textColor={countdownData.textColor || '#ffffff'}
+              duration={countdownData.duration || '00:15:00'}
+              activeText={countdownData.activeText || 'Oferta por tempo limitado'}
+              finishedText={countdownData.finishedText || 'O tempo acabou!'}
+              stickyTop={false} // No builder preview, don't use sticky
+              className="text-sm"
+            />
           </div>
         );
       case 'video':

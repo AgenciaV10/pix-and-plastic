@@ -9,6 +9,7 @@ import { CardForm } from "@/components/checkout/CardForm";
 import { PixForm } from "@/components/checkout/PixForm";
 import { SecurityMessage } from "@/components/checkout/SecurityMessage";
 import { CheckoutFooter } from "@/components/checkout/CheckoutFooter";
+import { CountdownTimer } from "@/components/countdown/CountdownTimer";
 
 type PaymentMethod = "card" | "pix" | "card_pix";
 
@@ -131,10 +132,133 @@ export function CheckoutComponent({
     }
   };
 
+  const renderCustomComponent = (component: any) => {
+    const componentData = JSON.parse(component.content || '{}');
+    
+    switch (component.type) {
+      case 'text':
+        return (
+          <div 
+            key={component.id}
+            className="p-3 border rounded-lg"
+            style={{
+              backgroundColor: component.props?.backgroundColor || '#ffffff',
+              borderColor: component.props?.borderColor || '#e5e7eb',
+              borderWidth: `${component.props?.borderWidth || 1}px`,
+              borderRadius: `${component.props?.borderRadius || 8}px`,
+              color: component.props?.color || '#000000'
+            }}
+          >
+            {component.content}
+          </div>
+        );
+      
+      case 'countdown':
+        return (
+          <div key={component.id} className="mb-4">
+            <CountdownTimer
+              type={componentData.type || 'minutes'}
+              backgroundColor={componentData.backgroundColor || '#ef4444'}
+              textColor={componentData.textColor || '#ffffff'}
+              duration={componentData.duration || '00:15:00'}
+              activeText={componentData.activeText || 'Oferta por tempo limitado'}
+              finishedText={componentData.finishedText || 'O tempo acabou!'}
+              stickyTop={componentData.stickyTop || false}
+            />
+          </div>
+        );
+      
+      case 'image':
+        return (
+          <div key={component.id} className="mb-4">
+            <img 
+              src={component.content || 'https://via.placeholder.com/300x200?text=Imagem'} 
+              alt="Componente" 
+              className="w-full h-auto rounded-lg"
+              onError={(e) => {
+                e.currentTarget.src = 'https://via.placeholder.com/300x200?text=Imagem';
+              }}
+            />
+          </div>
+        );
+      
+      case 'advantages':
+        const advantages = JSON.parse(component.content || '[]');
+        return (
+          <div key={component.id} className="p-4 border rounded-lg mb-4">
+            <h4 className="font-semibold mb-3">Vantagens</h4>
+            <ul className="space-y-2">
+              {advantages.map((advantage: string, index: number) => (
+                <li key={index} className="flex items-center gap-3">
+                  <div className="w-5 h-5 bg-blue-500 rounded flex items-center justify-center flex-shrink-0">
+                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <span>{advantage}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      
+      case 'testimonial':
+        const testimonial = JSON.parse(component.content || '{}');
+        return (
+          <div 
+            key={component.id} 
+            className="p-4 border rounded-lg mb-4"
+            style={{
+              backgroundColor: testimonial.backgroundColor || '#ffffff',
+              color: testimonial.textColor || '#000000'
+            }}
+          >
+            <div className={`${testimonial.horizontalMode ? 'flex items-start gap-4' : 'text-center'}`}>
+              {testimonial.image && (
+                <div className={`${testimonial.horizontalMode ? 'flex-shrink-0' : 'mb-3'}`}>
+                  <img 
+                    src={testimonial.image} 
+                    alt={testimonial.name || 'Cliente'}
+                    className={`rounded-full object-cover ${
+                      testimonial.horizontalMode ? 'w-16 h-16' : 'w-20 h-20 mx-auto'
+                    }`}
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://via.placeholder.com/80x80?text=👤';
+                    }}
+                  />
+                </div>
+              )}
+              <div className={testimonial.horizontalMode ? 'flex-1' : ''}>
+                <div className={`flex items-center gap-1 mb-2 ${
+                  testimonial.horizontalMode ? '' : 'justify-center'
+                }`}>
+                  {[...Array(testimonial.rating || 5)].map((_, i) => (
+                    <span key={i} className="text-yellow-400 text-lg">★</span>
+                  ))}
+                </div>
+                <p className="text-sm mb-2 italic">"{testimonial.text || 'Depoimento do cliente'}"</p>
+                <p className="text-sm font-semibold opacity-75">- {testimonial.name || 'Nome do Cliente'}</p>
+              </div>
+            </div>
+          </div>
+        );
+      
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className={`min-h-screen bg-background ${className}`}>
       {/* Main Content */}
       <div className="container mx-auto px-[0.4rem] md:px-4 py-[0.4rem] md:py-8 max-w-4xl">
+        
+        {/* Custom Components */}
+        {components && components.length > 0 && (
+          <div className="mb-6 space-y-4">
+            {components.map((component) => renderCustomComponent(component))}
+          </div>
+        )}
 
         {/* Checkout Form */}
         <Card className="border-border shadow-lg">

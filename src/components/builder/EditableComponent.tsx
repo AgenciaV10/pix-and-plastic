@@ -15,6 +15,7 @@ import {
   AlignJustify
 } from 'lucide-react';
 import { ColumnComponent } from './ColumnManager';
+import { CountdownTimer } from '@/components/countdown/CountdownTimer';
 
 interface EditableComponentProps {
   component: ColumnComponent;
@@ -222,6 +223,63 @@ export function EditableComponent({
                 </li>
               ))}
             </ul>
+          </div>
+        );
+      
+      case 'countdown':
+        const countdownData = JSON.parse(component.content || '{}');
+        return (
+          <div className="border rounded-lg shadow-sm overflow-hidden">
+            <CountdownTimer
+              type={countdownData.type || 'minutes'}
+              backgroundColor={countdownData.backgroundColor || '#ef4444'}
+              textColor={countdownData.textColor || '#ffffff'}
+              duration={countdownData.duration || '00:15:00'}
+              activeText={countdownData.activeText || 'Oferta por tempo limitado'}
+              finishedText={countdownData.finishedText || 'O tempo acabou!'}
+              stickyTop={false}
+              className="text-sm"
+            />
+          </div>
+        );
+      
+      case 'testimonial':
+        const testimonial = JSON.parse(component.content || '{}');
+        return (
+          <div 
+            className="p-3 border rounded-lg shadow-sm"
+            style={{
+              backgroundColor: testimonial.backgroundColor || '#ffffff',
+              color: testimonial.textColor || '#000000'
+            }}
+          >
+            <div className={`${testimonial.horizontalMode ? 'flex items-start gap-3' : 'text-center'}`}>
+              {testimonial.image && (
+                <div className={`${testimonial.horizontalMode ? 'flex-shrink-0' : 'mb-2'}`}>
+                  <img 
+                    src={testimonial.image} 
+                    alt={testimonial.name || 'Cliente'}
+                    className={`rounded-full object-cover ${
+                      testimonial.horizontalMode ? 'w-12 h-12' : 'w-16 h-16 mx-auto'
+                    }`}
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://via.placeholder.com/64x64?text=👤';
+                    }}
+                  />
+                </div>
+              )}
+              <div className={testimonial.horizontalMode ? 'flex-1' : ''}>
+                <div className={`flex items-center gap-1 mb-1 ${
+                  testimonial.horizontalMode ? '' : 'justify-center'
+                }`}>
+                  {[...Array(testimonial.rating || 5)].map((_, i) => (
+                    <span key={i} className="text-yellow-400 text-xs">★</span>
+                  ))}
+                </div>
+                <p className="text-xs mb-1">"{testimonial.text || 'Depoimento do cliente'}"</p>
+                <p className="text-xs font-semibold opacity-75">- {testimonial.name || 'Nome do Cliente'}</p>
+              </div>
+            </div>
           </div>
         );
       
